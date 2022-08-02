@@ -30,30 +30,74 @@ fun ToDoList(
     clickAction: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(defaultSpace)
-    ) {
-        items(items) { toDoItem ->
-            ToDoCard(
-                id = 1,
-                title = "Task 1",
-                bodyText = "this is great",
-                closeAction = closeAction,
-                checkAction = checkAction,
-                clickAction = clickAction,
-            )
+    if (items.isEmpty()) {
+        NoItems()
+    } else {
+        LazyColumn(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(defaultSpace)
+        ) {
+            items(items) { toDoItem ->
+                ToDoCard(
+                    id = toDoItem.id,
+                    title = toDoItem.name,
+                    bodyText = toDoItem.description,
+                    closeAction = closeAction,
+                    checkAction = checkAction,
+                    clickAction = clickAction,
+                )
+            }
         }
     }
 }
 
+@Composable
+private fun NoItems() {
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(
+            space = defaultSpace,
+            Alignment.CenterVertically
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_baseline_fact_check_24),
+            contentDescription = "",
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onTertiaryContainer)
+        )
+        Text(text = "No Incomplete Tasks!", style = Typography.bodyLarge)
+    }
+}
+
+@Preview(
+    name = "Light Mode"
+)
+@Composable
+private fun NoItemsLightPreview() {
+    ToDoAllTheThingsTheme(useDarkTheme = false) {
+        NoItems()
+    }
+}
+
+@Preview(
+    name = "Dark Mode"
+)
+@Composable
+private fun NoItemsDarkPreview() {
+    ToDoAllTheThingsTheme(useDarkTheme = false) {
+        NoItems()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToDoCard(
+private fun ToDoCard(
     title: String,
     id: Int,
-    bodyText: String,
+    bodyText: String?,
     closeAction: (Int) -> Unit,
     checkAction: (Int, Boolean) -> Unit,
     clickAction: (Int) -> Unit,
@@ -85,7 +129,9 @@ fun ToDoCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Title(title, modifier = Modifier)
-                Text(bodyText, style = Typography.bodyMedium)
+                bodyText?.let {
+                    Text(bodyText, style = Typography.bodyMedium)
+                }
             }
 
             Spacer(modifier = Modifier.weight(0.2f))
@@ -113,7 +159,7 @@ private fun ToDoCardLightPreview() {
             title = "Title",
             bodyText = "This is a longer body text that explains more details about the task",
             closeAction = {},
-            checkAction = {_,_ ->},
+            checkAction = { _, _ -> },
             clickAction = {},
         )
     }
@@ -130,7 +176,7 @@ private fun ToDoCardDarkPreview() {
             title = "Title",
             bodyText = "This is a longer body text that explains more details about the task",
             closeAction = {},
-            checkAction = {_,_ ->},
+            checkAction = { _, _ -> },
             clickAction = {},
         )
     }
@@ -143,7 +189,7 @@ private fun ToDoCardDarkPreview() {
 private fun ToDoListPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = false) {
         ToDoList(
-            ToDoItemEntity.mockList(), {}, { _, _ ->}, {})
+            ToDoItemEntity.mockList(), {}, { _, _ -> }, {})
     }
 }
 
@@ -153,6 +199,27 @@ private fun ToDoListPreview() {
 @Composable
 fun ToDoListDarkPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = true) {
-        ToDoList(ToDoItemEntity.mockList(), {}, { _, _ ->}, {})
+        ToDoList(ToDoItemEntity.mockList(), {}, { _, _ -> }, {})
+    }
+}
+
+@Preview(
+    name = "Light Mode Empty List"
+)
+@Composable
+private fun ToDoEmptyListPreview() {
+    ToDoAllTheThingsTheme(useDarkTheme = false) {
+        ToDoList(
+            emptyList(), {}, { _, _ -> }, {})
+    }
+}
+
+@Preview(
+    name = "Dark Mode Empty List"
+)
+@Composable
+fun ToDoEmptyListDarkPreview() {
+    ToDoAllTheThingsTheme(useDarkTheme = true) {
+        ToDoList(emptyList(), {}, { _, _ -> }, {})
     }
 }

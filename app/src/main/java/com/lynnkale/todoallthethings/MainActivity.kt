@@ -4,7 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,11 +45,21 @@ fun ToDoAllTheThingsApp() {
         Scaffold(
             topBar = {
                 TopBar()
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { navController.navigate(New.route) }
+                ) {
+                    Icon(Icons.Filled.Add,"New ToDo Item")
+                }
             }
         ) { innerPadding ->
             NavHost(navController = navController, startDestination = List.route, modifier = Modifier.padding(innerPadding)) {
                 composable(route = List.route) {
                     List.screen()
+                }
+                composable(route = New.route) {
+                    New.screen()
                 }
             }
         }
