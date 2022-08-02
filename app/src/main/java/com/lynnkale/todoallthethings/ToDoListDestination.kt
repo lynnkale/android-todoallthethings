@@ -1,11 +1,12 @@
 package com.lynnkale.todoallthethings
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.lynnkale.todoallthethings.newtodo.ui.NewItemModal
 import com.lynnkale.todoallthethings.todolist.event.ToDoListEvent
 import com.lynnkale.todoallthethings.todolist.ui.ToDoList
 import com.lynnkale.todoallthethings.todolist.viewmodel.TodoListViewModel
@@ -33,6 +34,16 @@ object List : ToDoListDestination {
                 )
             },
             clickAction = { },
+        )
+    }
+}
+
+object New : ToDoListDestination {
+    override val icon = Icons.Filled.Add
+    override val route = "add-item"
+    override val screen: @Composable () -> Unit = {
+        NewItemModal(
+            onSave = { }
         )
     }
 }
