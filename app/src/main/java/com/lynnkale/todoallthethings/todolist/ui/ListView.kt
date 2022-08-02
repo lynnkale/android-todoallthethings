@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -26,7 +26,7 @@ import com.lynnkale.todoallthethings.core.ui.theme.defaultSpace
 fun ToDoList(
     items: List<ToDoItemEntity>,
     closeAction: (Int) -> Unit,
-    checkAction: (Int, Boolean) -> Unit,
+    checkAction: (ToDoItemEntity, Boolean) -> Unit,
     clickAction: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -37,11 +37,9 @@ fun ToDoList(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(defaultSpace)
         ) {
-            items(items) { toDoItem ->
+            items(items = items, key = { it.id }) { toDoItem ->
                 ToDoCard(
-                    id = toDoItem.id,
-                    title = toDoItem.name,
-                    bodyText = toDoItem.description,
+                    item = toDoItem,
                     closeAction = closeAction,
                     checkAction = checkAction,
                     clickAction = clickAction,
@@ -95,17 +93,14 @@ private fun NoItemsDarkPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ToDoCard(
-    title: String,
-    id: Int,
-    bodyText: String?,
+    item: ToDoItemEntity,
     closeAction: (Int) -> Unit,
-    checkAction: (Int, Boolean) -> Unit,
+    checkAction: (ToDoItemEntity, Boolean) -> Unit,
     clickAction: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    checked: Boolean = false,
 ) {
     Card(
-        onClick = { clickAction(id) },
+        onClick = { clickAction(item.id) },
         modifier = modifier.background(
             color = MaterialTheme.colorScheme.surface,
 
@@ -119,18 +114,20 @@ private fun ToDoCard(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-
+            var checked by remember { mutableStateOf(item.isCompleted)}
             Checkbox(
                 checked = checked,
-                onCheckedChange = { isChecked -> checkAction(id, isChecked) },
-                // modifier = Modifier.size(48.dp)
+                onCheckedChange = { isChecked ->
+                    checked = isChecked
+                    checkAction(item, isChecked)
+                },
             )
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Title(title, modifier = Modifier)
-                bodyText?.let {
-                    Text(bodyText, style = Typography.bodyMedium)
+                Title(item.name, modifier = Modifier)
+                item.description?.let {
+                    Text(item.description, style = Typography.bodyMedium)
                 }
             }
 
@@ -142,7 +139,7 @@ private fun ToDoCard(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier
                     .size(48.dp)
-                    .clickable(onClick = { closeAction(id) }),
+                    .clickable(onClick = { closeAction(item.id) }),
             )
         }
     }
@@ -155,9 +152,11 @@ private fun ToDoCard(
 private fun ToDoCardLightPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = false) {
         ToDoCard(
-            id = 1,
-            title = "Title",
-            bodyText = "This is a longer body text that explains more details about the task",
+            item = ToDoItemEntity(
+                id = 1,
+                name = "Title",
+                description = "This is a longer body text that explains more details about the task",
+            ),
             closeAction = {},
             checkAction = { _, _ -> },
             clickAction = {},
@@ -172,9 +171,11 @@ private fun ToDoCardLightPreview() {
 private fun ToDoCardDarkPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = true) {
         ToDoCard(
-            id = 1,
-            title = "Title",
-            bodyText = "This is a longer body text that explains more details about the task",
+            item = ToDoItemEntity(
+                id = 1,
+                name = "Title",
+                description = "This is a longer body text that explains more details about the task",
+            ),
             closeAction = {},
             checkAction = { _, _ -> },
             clickAction = {},

@@ -22,7 +22,7 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideNewsArticleDatabase(database: ToDoDatabase): ToDoItemDao {
+    fun provideToDoDatabase(database: ToDoDatabase): ToDoItemDao {
         return database.todoItemDao
     }
 }
