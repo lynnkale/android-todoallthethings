@@ -1,4 +1,4 @@
-package com.lynnkale.todoallthethings.ui.theme
+package com.lynnkale.todoallthethings.core.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

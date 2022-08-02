@@ -7,8 +7,8 @@ import java.time.Instant
 
 @Entity(tableName = "todo_item", indices = [Index(value = ["isDismissed", "isCompleted"])])
 data class ToDoItemEntity (
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val name: String,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val name: String = "",
     val description: String? = null,
     val isDismissed: Boolean = false,
     val isCompleted: Boolean = false,

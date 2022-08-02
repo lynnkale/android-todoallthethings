@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lynnkale.todoallthethings.todolist.domain.GetOpenItemsUseCase
 import com.lynnkale.todoallthethings.todolist.event.ToDoListEvent
-import com.lynnkale.todoallthethings.todolist.repository.ToDoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

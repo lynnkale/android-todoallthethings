@@ -6,8 +6,13 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.lynnkale.todoallthethings.newtodo.ui.NewItemModal
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.lynnkale.todoallthethings.newtodo.event.EditTodoItemEvent
+import com.lynnkale.todoallthethings.newtodo.ui.NewItemScreen
+import com.lynnkale.todoallthethings.newtodo.viewmodel.NewToDoViewModel
 import com.lynnkale.todoallthethings.todolist.event.ToDoListEvent
+import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
 import com.lynnkale.todoallthethings.todolist.ui.ToDoList
 import com.lynnkale.todoallthethings.todolist.viewmodel.TodoListViewModel
 
@@ -41,9 +46,5 @@ object List : ToDoListDestination {
 object New : ToDoListDestination {
     override val icon = Icons.Filled.Add
     override val route = "add-item"
-    override val screen: @Composable () -> Unit = {
-        NewItemModal(
-            onSave = { }
-        )
-    }
+    override val screen: @Composable () -> Unit = {}
 }

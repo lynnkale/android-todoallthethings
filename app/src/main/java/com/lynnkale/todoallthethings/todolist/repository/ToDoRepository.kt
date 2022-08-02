@@ -10,4 +10,8 @@ class ToDoRepository @Inject constructor(
     suspend fun getItems(): List<ToDoItemEntity> {
         return dataSource.local.getAll()
     }
+
+    suspend fun saveItem(item: ToDoItemEntity) {
+        dataSource.local.insertAll(item)
+    }
 }

@@ -17,10 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lynnkale.todoallthethings.R
 import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
-import com.lynnkale.todoallthethings.ui.Title
-import com.lynnkale.todoallthethings.ui.theme.ToDoAllTheThingsTheme
-import com.lynnkale.todoallthethings.ui.theme.Typography
-import com.lynnkale.todoallthethings.ui.theme.defaultSpace
+import com.lynnkale.todoallthethings.core.ui.Title
+import com.lynnkale.todoallthethings.core.ui.theme.ToDoAllTheThingsTheme
+import com.lynnkale.todoallthethings.core.ui.theme.Typography
+import com.lynnkale.todoallthethings.core.ui.theme.defaultSpace
 
 @Composable
 fun ToDoList(
