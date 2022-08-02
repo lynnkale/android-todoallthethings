@@ -8,10 +8,18 @@ class ToDoRepository @Inject constructor(
     private val dataSource: ToDoItemLocalDataSource
 ){
     suspend fun getItems(): List<ToDoItemEntity> {
-        return dataSource.local.getAll()
+        return dataSource.local.getIncomplete()
+    }
+
+    suspend fun getItem(id: Int): ToDoItemEntity {
+        return dataSource.local.get(id)
     }
 
     suspend fun saveItem(item: ToDoItemEntity) {
-        dataSource.local.insertAll(item)
+        return if (item.id > 0) {
+            dataSource.local.update(item)
+        } else {
+            dataSource.local.insert(item)
+        }
     }
 }

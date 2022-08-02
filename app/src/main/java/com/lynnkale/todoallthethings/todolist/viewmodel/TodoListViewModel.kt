@@ -6,14 +6,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lynnkale.todoallthethings.todolist.domain.GetOpenItemsUseCase
+import com.lynnkale.todoallthethings.todolist.domain.UpdateItemUseCase
 import com.lynnkale.todoallthethings.todolist.event.ToDoListEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TodoListViewModel @Inject constructor(
-    private val getItems: GetOpenItemsUseCase
+    private val getItems: GetOpenItemsUseCase,
+    private val updateItem: UpdateItemUseCase,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(TodoListState())
@@ -52,7 +55,12 @@ class TodoListViewModel @Inject constructor(
 
     private fun handleOnCheck(event: ToDoListEvent.OnCheckEvent) {
         Log.d(TAG, "handleOnCheck")
-        // TODO
+        val updatedItem = event.item.copy(isCompleted = event.checked)
+        viewModelScope.launch {
+            delay(500)
+            updateItem.invoke(updatedItem)
+            listenToItems()
+        }
     }
 
     private fun handleDismiss(event: ToDoListEvent.OnDismissEvent) {
