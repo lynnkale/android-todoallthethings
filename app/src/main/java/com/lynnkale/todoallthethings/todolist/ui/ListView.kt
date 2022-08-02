@@ -1,12 +1,12 @@
 package com.lynnkale.todoallthethings.todolist.ui
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lynnkale.todoallthethings.R
+import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
 import com.lynnkale.todoallthethings.ui.Title
 import com.lynnkale.todoallthethings.ui.theme.ToDoAllTheThingsTheme
 import com.lynnkale.todoallthethings.ui.theme.Typography
@@ -23,37 +24,26 @@ import com.lynnkale.todoallthethings.ui.theme.defaultSpace
 
 @Composable
 fun ToDoList(
-    closeAction: () -> Unit,
-    checkAction: (Boolean) -> Unit,
-    clickAction: () -> Unit,
+    items: List<ToDoItemEntity>,
+    closeAction: (Int) -> Unit,
+    checkAction: (Int, Boolean) -> Unit,
+    clickAction: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(defaultSpace)
     ) {
-        ToDoCard(
-            title = "Task 1",
-            bodyText = "this is great",
-            closeAction = { },
-            checkAction = { },
-            clickAction = { }
-        )
-        ToDoCard(
-            title = "Task 2",
-            bodyText = "this is great",
-            closeAction = { },
-            checkAction = { },
-            clickAction = { },
-            checked = true,
-        )
-        ToDoCard(
-            title = "Task 3",
-            bodyText = "This is a longer body text that explains more details about the task",
-            closeAction = { },
-            checkAction = { },
-            clickAction = { }
-        )
+        items(items) { toDoItem ->
+            ToDoCard(
+                id = 1,
+                title = "Task 1",
+                bodyText = "this is great",
+                closeAction = closeAction,
+                checkAction = checkAction,
+                clickAction = clickAction,
+            )
+        }
     }
 }
 
@@ -62,15 +52,16 @@ fun ToDoList(
 @Composable
 fun ToDoCard(
     title: String,
+    id: Int,
     bodyText: String,
-    closeAction: () -> Unit,
-    checkAction: (Boolean) -> Unit,
-    clickAction: () -> Unit,
+    closeAction: (Int) -> Unit,
+    checkAction: (Int, Boolean) -> Unit,
+    clickAction: (Int) -> Unit,
     modifier: Modifier = Modifier,
     checked: Boolean = false,
 ) {
     Card(
-        onClick = clickAction,
+        onClick = { clickAction(id) },
         modifier = modifier.background(
             color = MaterialTheme.colorScheme.surface,
 
@@ -87,8 +78,8 @@ fun ToDoCard(
 
             Checkbox(
                 checked = checked,
-                onCheckedChange = checkAction,
-               // modifier = Modifier.size(48.dp)
+                onCheckedChange = { isChecked -> checkAction(id, isChecked) },
+                // modifier = Modifier.size(48.dp)
             )
             Column(
                 modifier = Modifier.weight(1f)
@@ -105,7 +96,7 @@ fun ToDoCard(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier
                     .size(48.dp)
-                    .clickable(onClick = closeAction),
+                    .clickable(onClick = { closeAction(id) }),
             )
         }
     }
@@ -118,10 +109,11 @@ fun ToDoCard(
 private fun ToDoCardLightPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = false) {
         ToDoCard(
+            id = 1,
             title = "Title",
             bodyText = "This is a longer body text that explains more details about the task",
             closeAction = {},
-            checkAction = {},
+            checkAction = {_,_ ->},
             clickAction = {},
         )
     }
@@ -134,10 +126,11 @@ private fun ToDoCardLightPreview() {
 private fun ToDoCardDarkPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = true) {
         ToDoCard(
+            id = 1,
             title = "Title",
             bodyText = "This is a longer body text that explains more details about the task",
             closeAction = {},
-            checkAction = {},
+            checkAction = {_,_ ->},
             clickAction = {},
         )
     }
@@ -149,7 +142,8 @@ private fun ToDoCardDarkPreview() {
 @Composable
 private fun ToDoListPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = false) {
-        ToDoList({}, {}, {})
+        ToDoList(
+            ToDoItemEntity.mockList(), {}, { _, _ ->}, {})
     }
 }
 
@@ -159,6 +153,6 @@ private fun ToDoListPreview() {
 @Composable
 fun ToDoListDarkPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = true) {
-        ToDoList({}, {}, {})
+        ToDoList(ToDoItemEntity.mockList(), {}, { _, _ ->}, {})
     }
 }
