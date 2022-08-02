@@ -1,4 +1,4 @@
-package com.lynnkale.todoallthethings.ui
+package com.lynnkale.todoallthethings.core.ui
 
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
