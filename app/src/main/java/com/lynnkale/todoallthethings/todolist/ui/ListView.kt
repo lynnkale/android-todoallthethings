@@ -25,9 +25,9 @@ import com.lynnkale.todoallthethings.core.ui.theme.defaultSpace
 @Composable
 fun ToDoList(
     items: List<ToDoItemEntity>,
-    closeAction: (Int) -> Unit,
+    closeAction: (ToDoItemEntity) -> Unit,
     checkAction: (ToDoItemEntity, Boolean) -> Unit,
-    clickAction: (Int) -> Unit,
+    clickAction: (ToDoItemEntity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (items.isEmpty()) {
@@ -54,7 +54,8 @@ private fun NoItems() {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colorScheme.tertiaryContainer),
         verticalArrangement = Arrangement.spacedBy(
             space = defaultSpace,
             Alignment.CenterVertically
@@ -71,7 +72,7 @@ private fun NoItems() {
 }
 
 @Preview(
-    name = "Light Mode"
+    name = "Light Mode",
 )
 @Composable
 private fun NoItemsLightPreview() {
@@ -94,13 +95,13 @@ private fun NoItemsDarkPreview() {
 @Composable
 private fun ToDoCard(
     item: ToDoItemEntity,
-    closeAction: (Int) -> Unit,
+    closeAction: (ToDoItemEntity) -> Unit,
     checkAction: (ToDoItemEntity, Boolean) -> Unit,
-    clickAction: (Int) -> Unit,
+    clickAction: (ToDoItemEntity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
-        onClick = { clickAction(item.id) },
+        onClick = { clickAction(item) },
         modifier = modifier.background(
             color = MaterialTheme.colorScheme.surface,
 
@@ -139,7 +140,7 @@ private fun ToDoCard(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier
                     .size(48.dp)
-                    .clickable(onClick = { closeAction(item.id) }),
+                    .clickable(onClick = { closeAction(item) }),
             )
         }
     }

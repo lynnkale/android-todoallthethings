@@ -65,7 +65,12 @@ class TodoListViewModel @Inject constructor(
 
     private fun handleDismiss(event: ToDoListEvent.OnDismissEvent) {
         Log.d(TAG, "handleDismiss")
-        // TODO
+        val dismissedItem = event.item.copy(isDismissed = true)
+        viewModelScope.launch {
+            delay(500)
+            updateItem.invoke(dismissedItem)
+            listenToItems()
+        }
     }
 
     companion object {
