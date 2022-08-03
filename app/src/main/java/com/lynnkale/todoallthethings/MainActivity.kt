@@ -9,7 +9,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,10 +21,8 @@ import com.lynnkale.todoallthethings.core.ui.theme.defaultSpace
 import com.lynnkale.todoallthethings.newtodo.event.EditTodoItemEvent
 import com.lynnkale.todoallthethings.newtodo.ui.NewItemScreen
 import com.lynnkale.todoallthethings.newtodo.viewmodel.NewToDoViewModel
-import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
+import com.lynnkale.todoallthethings.todolist.model.ToDoItem
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -77,19 +74,24 @@ fun ToDoAllTheThingsApp() {
                     composable(route = New.route) {
 
                         val viewModel = hiltViewModel<NewToDoViewModel>()
+
                         NewItemScreen(
-                            onSave = {
+                            viewState = viewModel.state.value,
+                            onChangeName = { name ->
                                 viewModel.eventListener(
-                                    EditTodoItemEvent.OnSaveEvent(
-                                        item = ToDoItemEntity(
-                                            name = "New Item Name! " + UUID.randomUUID().toString(),
-                                            description = "Make sure to actually do this thing before it's too late!",
-                                        )
-                                    )
+                                    EditTodoItemEvent.OnChangeName(name)
                                 )
-                                navigator.navigateTo(List)
+                            },
+                            onChangeDescription = { description ->
+                                viewModel.eventListener(
+                                    EditTodoItemEvent.OnChangeDescription(description)
+                                )
                             }
-                        )
+                        ) {
+                            viewModel.eventListener(
+                                EditTodoItemEvent.OnSaveEvent { navigator.navigateTo(List) }
+                            )
+                        }
                     }
                 }
             }
