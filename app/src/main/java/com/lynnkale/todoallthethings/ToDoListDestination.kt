@@ -29,11 +29,15 @@ object List : ToDoListDestination {
         val viewModel = hiltViewModel<TodoListViewModel>()
         ToDoList(
             items = viewModel.state.value.todoItems,
-            closeAction = { },
-            checkAction = { id, checked ->
+            closeAction = { item ->
+                viewModel.eventListener(
+                    ToDoListEvent.OnDismissEvent(item)
+                )
+            },
+            checkAction = { item, checked ->
                 viewModel.eventListener(
                     ToDoListEvent.OnCheckEvent(
-                        id,
+                        item,
                         checked
                     )
                 )

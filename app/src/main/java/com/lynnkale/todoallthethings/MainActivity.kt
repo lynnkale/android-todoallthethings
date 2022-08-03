@@ -25,6 +25,7 @@ import com.lynnkale.todoallthethings.newtodo.viewmodel.NewToDoViewModel
 import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -81,7 +82,7 @@ fun ToDoAllTheThingsApp() {
                                 viewModel.eventListener(
                                     EditTodoItemEvent.OnSaveEvent(
                                         item = ToDoItemEntity(
-                                            name = "New Item Name!",
+                                            name = "New Item Name! " + UUID.randomUUID().toString(),
                                             description = "Make sure to actually do this thing before it's too late!",
                                         )
                                     )
