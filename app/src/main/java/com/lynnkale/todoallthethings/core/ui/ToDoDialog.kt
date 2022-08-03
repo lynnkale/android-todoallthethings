@@ -24,7 +24,7 @@ fun ToDoDialog(
         Box(
             modifier = Modifier
                 .height(2.dp)
-                .fillMaxWidth(0.7f)
+                .fillMaxWidth()
                 .background(color = MaterialTheme.colorScheme.secondary)
         )
         content()

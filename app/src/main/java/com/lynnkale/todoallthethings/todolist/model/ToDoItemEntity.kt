@@ -16,11 +16,47 @@ data class ToDoItemEntity (
 ) {
     companion object {
         fun mock(id: Int = 1): ToDoItemEntity {
-            return ToDoItemEntity(id, "Name", "Description!", false, false)
+            return ToDoItemEntity(id, "Name $id", "Description!", false, false)
         }
 
         fun mockList(): List<ToDoItemEntity> {
             return (1..5).map { mock(it) }
+        }
+    }
+}
+
+class ToDoItem(
+    var id: Int,
+    var name: String,
+    var description: String,
+    var isDismissed: Boolean,
+    var isCompleted: Boolean,
+    var created: Instant,
+) {
+
+    fun toEntity(): ToDoItemEntity {
+        return ToDoItemEntity(
+            id = id,
+            name = name,
+            description = description.ifEmpty { null },
+            isDismissed = isDismissed,
+            isCompleted = isCompleted,
+            created = created.epochSecond,
+        )
+    }
+    companion object {
+        const val FIELD_NAME = "name"
+        const val  FIELD_DESCRIPTION = "description"
+
+        fun fromEntity(entity: ToDoItemEntity): ToDoItem {
+            return ToDoItem(
+                id = entity.id,
+                name = entity.name,
+                description = entity.description ?: "",
+                isDismissed = entity.isDismissed,
+                isCompleted = entity.isCompleted,
+                created = Instant.ofEpochSecond(entity.created),
+            )
         }
     }
 }

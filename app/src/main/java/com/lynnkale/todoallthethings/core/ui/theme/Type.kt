@@ -10,12 +10,47 @@ import com.lynnkale.todoallthethings.R
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+    labelSmall = TextStyle(
+        fontFamily = FontFamily(
+            Font(R.font.abel_regular)
+        ),
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+    ),
+    labelMedium = TextStyle(
+        fontFamily = FontFamily(
+            Font(R.font.abel_regular)
+        ),
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+    ),
+    labelLarge = TextStyle(
+        fontFamily = FontFamily(
+            Font(R.font.abel_regular)
+        ),
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+    ),
+    bodySmall = TextStyle(
+        fontFamily = FontFamily(
+            Font(R.font.abel_regular)
+        ),
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+    ),
     bodyMedium = TextStyle(
         fontFamily = FontFamily(
             Font(R.font.abel_regular)
         ),
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = FontFamily(
+            Font(R.font.abel_regular)
+        ),
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
     ),
     headlineLarge = TextStyle(
         fontFamily = FontFamily(

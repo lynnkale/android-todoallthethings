@@ -4,5 +4,6 @@ import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
 
 data class EditTodoItemState(
     val item: ToDoItemEntity,
-    val isError: Boolean = false,
+    val errors: Map<String, List<Int>> = emptyMap(),
+    val saved: Boolean = false,
 )

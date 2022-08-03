@@ -54,8 +54,7 @@ private fun NoItems() {
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth()
-            .background(color = MaterialTheme.colorScheme.tertiaryContainer),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(
             space = defaultSpace,
             Alignment.CenterVertically
