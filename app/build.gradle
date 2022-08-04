@@ -78,6 +78,7 @@ dependencies {
     implementation 'androidx.compose.compiler:compiler:1.2.0'
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
 
     // room
     implementation "androidx.room:room-runtime:$room_version"

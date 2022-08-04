@@ -11,6 +11,4 @@ class Navigator {
     fun navigateTo(navTarget: ToDoListDestination) {
         _sharedFlow.tryEmit(navTarget)
     }
-
-
 }

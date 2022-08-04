@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 private val LightColors = lightColorScheme(
@@ -70,18 +72,23 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun ToDoAllTheThingsTheme(
-  useDarkTheme: Boolean = isSystemInDarkTheme(),
-  content: @Composable() () -> Unit
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable() () -> Unit
 ) {
-  val colors = if (!useDarkTheme) {
-    LightColors
-  } else {
-    DarkColors
-  }
+    val colors = if (!useDarkTheme) {
+        LightColors
+    } else {
+        DarkColors
+    }
 
-  MaterialTheme(
-    colorScheme = colors,
-    content = content,
-      typography = Typography
-  )
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(
+        color = colors.background
+    )
+
+    MaterialTheme(
+        colorScheme = colors,
+        content = content,
+        typography = Typography
+    )
 }
