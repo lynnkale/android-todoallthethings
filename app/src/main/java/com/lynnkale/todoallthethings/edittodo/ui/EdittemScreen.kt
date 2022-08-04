@@ -1,19 +1,14 @@
-package com.lynnkale.todoallthethings.newtodo.ui
+package com.lynnkale.todoallthethings.edittodo.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.lynnkale.todoallthethings.R
 import com.lynnkale.todoallthethings.core.ui.ErrorMessage
 import com.lynnkale.todoallthethings.core.ui.ToDoDialog
@@ -21,20 +16,19 @@ import com.lynnkale.todoallthethings.core.ui.ToDoTextArea
 import com.lynnkale.todoallthethings.core.ui.ToDoTextField
 import com.lynnkale.todoallthethings.core.ui.theme.ToDoAllTheThingsTheme
 import com.lynnkale.todoallthethings.core.ui.theme.defaultSpace
-import com.lynnkale.todoallthethings.newtodo.event.EditTodoItemEvent
-import com.lynnkale.todoallthethings.newtodo.viewmodel.EditTodoItemState
+import com.lynnkale.todoallthethings.edittodo.viewmodel.EditTodoItemState
 import com.lynnkale.todoallthethings.todolist.model.ToDoItem
 import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
 
 @Composable
-fun NewItemScreen(
+fun EditItemScreen(
     viewState: EditTodoItemState,
     onChangeName: (String) -> Unit,
     onChangeDescription: (String) -> Unit,
     onSave: () -> Unit,
 ) {
     ToDoDialog(
-        title = stringResource(R.string.create_new_item),
+        title = stringResource(if (viewState.isNew) R.string.create_new_item else R.string.edit_item),
         content = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(space = defaultSpace),
@@ -86,7 +80,7 @@ fun NewItemScreen(
 @Composable
 fun NewItemModalLightPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = false) {
-        NewItemScreen(
+        EditItemScreen(
             viewState = EditTodoItemState(item = ToDoItemEntity.mock()),
             onChangeName = {},
             onChangeDescription = {},
@@ -100,8 +94,8 @@ fun NewItemModalLightPreview() {
 @Composable
 fun NewItemModalDarkPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = true) {
-        NewItemScreen(
-            viewState = EditTodoItemState(item = ToDoItemEntity.mock()),
+        EditItemScreen(
+            viewState = EditTodoItemState(item = ToDoItemEntity.mock(), isNew = true),
             onChangeName = {},
             onChangeDescription = {},
             onSave = {})
@@ -114,7 +108,7 @@ fun NewItemModalDarkPreview() {
 @Composable
 fun NewItemModalErrorPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = true) {
-        NewItemScreen(
+        EditItemScreen(
             viewState = EditTodoItemState(
                 item = ToDoItemEntity.mock(),
                 errors = mapOf(ToDoItem.FIELD_NAME to listOf<Int>(R.string.name_value_required))

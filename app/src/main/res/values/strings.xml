@@ -7,4 +7,5 @@
     <string name="name_placeholder">What do you want to do?</string>
     <string name="name_value_required">A Name is required.</string>
     <string name="create_new_item">Create New Todo</string>
+    <string name="edit_item">Edit Todo</string>
 </resources>

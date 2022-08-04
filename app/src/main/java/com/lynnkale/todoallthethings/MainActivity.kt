@@ -14,6 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.lynnkale.todoallthethings.completed.ui.CompletedListView
 import com.lynnkale.todoallthethings.completed.viewmodel.CompletedListViewModel
 import com.lynnkale.todoallthethings.core.navigation.*
@@ -22,9 +23,10 @@ import com.lynnkale.todoallthethings.core.ui.BottomNavigationBar
 import com.lynnkale.todoallthethings.core.ui.TopBar
 import com.lynnkale.todoallthethings.core.ui.theme.ToDoAllTheThingsTheme
 import com.lynnkale.todoallthethings.core.ui.theme.defaultSpace
-import com.lynnkale.todoallthethings.newtodo.event.EditTodoItemEvent
-import com.lynnkale.todoallthethings.newtodo.ui.NewItemScreen
-import com.lynnkale.todoallthethings.newtodo.viewmodel.NewToDoViewModel
+import com.lynnkale.todoallthethings.edittodo.event.EditTodoItemEvent
+import com.lynnkale.todoallthethings.edittodo.ui.EditItemScreen
+import com.lynnkale.todoallthethings.edittodo.viewmodel.EditToDoViewModel
+import com.lynnkale.todoallthethings.edittodo.viewmodel.NewToDoViewModel
 import com.lynnkale.todoallthethings.todolist.event.ToDoListEvent
 import com.lynnkale.todoallthethings.todolist.ui.ToDoList
 import com.lynnkale.todoallthethings.todolist.viewmodel.TodoListViewModel
@@ -94,15 +96,16 @@ fun ToDoAllTheThingsApp() {
                                     )
                                 )
                             },
-                            clickAction = { },
+                            clickAction = { item ->
+                                val taskId = item.id
+                                navController.navigateSingleTopTo("${Edit.route}/$taskId")
+                            },
                         )
                     }
                     composable(route = New.route) {
-
-                        val viewModel = hiltViewModel<NewToDoViewModel>()
-
-                        NewItemScreen(
-                            viewState = viewModel.state.value,
+                        val viewModel = hiltViewModel<EditToDoViewModel>()
+                        EditItemScreen(
+                            viewState = viewModel.viewState.value,
                             onChangeName = { name ->
                                 viewModel.eventListener(
                                     EditTodoItemEvent.OnChangeName(name)
@@ -119,10 +122,36 @@ fun ToDoAllTheThingsApp() {
                             )
                         }
                     }
-                    composable(route = Completed.route) {
+                    composable(
+                        route = Completed.route
+                    ) {
                         val viewModel = hiltViewModel<CompletedListViewModel>()
                         CompletedListView(
                             state = viewModel.state.value
+                        )
+                    }
+                    composable(
+                        route = Edit.routeWithArgs,
+                        arguments = Edit.arguments,
+                    ) {
+                        val viewModel = hiltViewModel<EditToDoViewModel>()
+                        EditItemScreen(
+                            viewState = viewModel.viewState.value,
+                            onChangeName = { name ->
+                                viewModel.eventListener(
+                                    EditTodoItemEvent.OnChangeName(name)
+                                )
+                            },
+                            onChangeDescription = { description ->
+                                viewModel.eventListener(
+                                    EditTodoItemEvent.OnChangeDescription(description)
+                                )
+                            },
+                            onSave = {
+                                viewModel.eventListener(
+                                    EditTodoItemEvent.OnSaveEvent { navigator.navigateTo(TodoList) }
+                                )
+                            }
                         )
                     }
                 }

@@ -205,7 +205,8 @@ fun ToDoListDarkPreview() {
 }
 
 @Preview(
-    name = "Light Mode Empty List"
+    name = "Light Mode Empty List",
+    showSystemUi = true,
 )
 @Composable
 private fun ToDoEmptyListPreview() {
@@ -216,7 +217,8 @@ private fun ToDoEmptyListPreview() {
 }
 
 @Preview(
-    name = "Dark Mode Empty List"
+    name = "Dark Mode Empty List",
+    showSystemUi = true,
 )
 @Composable
 fun ToDoEmptyListDarkPreview() {
