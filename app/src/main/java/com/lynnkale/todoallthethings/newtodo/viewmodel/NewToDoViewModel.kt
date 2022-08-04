@@ -37,10 +37,13 @@ class NewToDoViewModel @Inject constructor(
 
     private fun isValid(): Boolean {
         val errorMessages = mutableListOf<Int>()
+        val errors = mutableMapOf<String, List<Int>>()
         if (_state.value.item.name.isEmpty()) {
             errorMessages.add(R.string.name_value_required)
+            errors[ToDoItem.FIELD_NAME] = errorMessages.toList()
         }
-        _state.value = _state.value.copy(errors = mapOf(ToDoItem.FIELD_NAME to errorMessages))
+        _state.value = _state.value.copy(errors = errors)
+
         return errorMessages.isEmpty()
     }
 

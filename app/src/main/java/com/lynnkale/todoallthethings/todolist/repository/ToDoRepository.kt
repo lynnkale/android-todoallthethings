@@ -11,6 +11,10 @@ class ToDoRepository @Inject constructor(
         return dataSource.local.getIncomplete()
     }
 
+    suspend fun getCompletedItems(): List<ToDoItemEntity> {
+        return dataSource.local.getComplete()
+    }
+
     suspend fun getItem(id: Int): ToDoItemEntity {
         return dataSource.local.get(id)
     }

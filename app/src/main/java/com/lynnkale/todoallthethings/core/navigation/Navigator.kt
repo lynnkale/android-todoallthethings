@@ -1,6 +1,5 @@
 package com.lynnkale.todoallthethings.core.navigation
 
-import com.lynnkale.todoallthethings.ToDoListDestination
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
