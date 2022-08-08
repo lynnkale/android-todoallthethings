@@ -40,7 +40,7 @@ fun EditItemScreen(
                     viewState.errors.values.forEach() { list ->
                         message += list.map { resourceId ->
                             stringResource(resourceId)
-                        }.joinToString ( separator = "\n" )
+                        }.joinToString(separator = "\n")
                     }
                     ErrorMessage(messageText = message)
                 }

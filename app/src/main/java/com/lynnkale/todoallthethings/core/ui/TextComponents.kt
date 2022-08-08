@@ -7,8 +7,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.lynnkale.todoallthethings.core.ui.theme.Typography
 
 @Composable
-fun Title (text: String, modifier: Modifier = Modifier) {
-    Text (
+fun Title(text: String, modifier: Modifier = Modifier) {
+    Text(
         text = text,
         modifier,
         style = Typography.headlineLarge,

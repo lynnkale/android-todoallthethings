@@ -20,13 +20,17 @@ fun ErrorMessage(messageText: String) {
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
             .background(color = MaterialTheme.colorScheme.errorContainer)
-            .border(width = 1.dp, color = MaterialTheme.colorScheme.error, shape = RoundedCornerShape(8.dp))
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.error,
+                shape = RoundedCornerShape(8.dp)
+            )
             .padding(
                 defaultSpace
             ),
-
-        ) {
-        Text(text = messageText,
+    ) {
+        Text(
+            text = messageText,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onErrorContainer
         )

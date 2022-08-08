@@ -1,25 +1,20 @@
 package com.lynnkale.todoallthethings.core.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.lynnkale.todoallthethings.core.ui.theme.ToDoAllTheThingsTheme
 import com.lynnkale.todoallthethings.core.ui.theme.defaultSpace
 
@@ -36,7 +31,11 @@ fun ToDoTextField(
         value = value,
         onValueChange = onValueChange,
         label = {
-            Text(style = MaterialTheme.typography.labelMedium, text = label, modifier = Modifier.padding(bottom = 6.dp))
+            Text(
+                style = MaterialTheme.typography.labelMedium,
+                text = label,
+                modifier = Modifier.padding(bottom = 6.dp)
+            )
         },
         placeholder = {
             Text(style = MaterialTheme.typography.bodyLarge, text = placeholder)
@@ -89,37 +88,43 @@ fun InputDarkPreview() {
                 label = "Plain Text Field",
                 value = "",
                 placeholder = "",
-                onValueChange = {})
+                onValueChange = {}
+            )
             ToDoTextField(
                 label = "Text Field with Value",
                 value = "This is the value",
                 placeholder = "",
-                onValueChange = {})
+                onValueChange = {}
+            )
             ToDoTextField(
                 label = "Text Field with Placeholder",
                 value = "",
                 placeholder = "Some Placeholder Text",
-                onValueChange = {})
+                onValueChange = {}
+            )
             ToDoTextField(
                 label = "Text Field with Error",
                 value = "",
                 placeholder = "Some Placeholder Text",
                 isError = true,
-                onValueChange = {})
+                onValueChange = {}
+            )
             ToDoTextArea(
                 label = "Long text",
                 value = "",
                 placeholder = "Enter Really Long Text Here",
-                onValueChange = {})
+                onValueChange = {}
+            )
             ToDoTextArea(
                 label = "Long text with value",
                 value = "When Compose runs your composables for the first time during initial " +
-                        "composition, it keeps track of the composables that you call to describe " +
-                        "your UI in a Composition. Recomposition is when Compose re-executes the " +
-                        "composables that may have changed in response to data changes and then " +
-                        "updates the Composition to reflect any changes.",
+                    "composition, it keeps track of the composables that you call to describe " +
+                    "your UI in a Composition. Recomposition is when Compose re-executes the " +
+                    "composables that may have changed in response to data changes and then " +
+                    "updates the Composition to reflect any changes.",
                 placeholder = "Enter Really Long Text Here",
-                onValueChange = {})
+                onValueChange = {}
+            )
             Text(text = "is this centered?")
         }
     }
@@ -138,12 +143,14 @@ fun InputLightPreview() {
                 label = "Text",
                 value = "",
                 placeholder = "Enter Text Here",
-                onValueChange = {})
+                onValueChange = {}
+            )
             ToDoTextArea(
                 label = "Long text",
                 value = "",
                 placeholder = "Enter Really Long Text Here",
-                onValueChange = {})
+                onValueChange = {}
+            )
         }
     }
 }
