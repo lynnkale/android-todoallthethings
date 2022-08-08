@@ -20,7 +20,7 @@ fun BottomNavigationBar(
     )
     BottomAppBar {
         tabs.forEach { item ->
-            IconButton(onClick = { navigator.navigateTo(item)}) {
+            IconButton(onClick = { navigator.navigateTo(item) }) {
                 Icon(imageVector = item.icon, contentDescription = item.name)
             }
         }
@@ -42,5 +42,3 @@ fun LightPreview() {
         BottomNavigationBar(Navigator())
     }
 }
-
-

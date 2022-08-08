@@ -38,10 +38,10 @@ jobs:
           arguments: assembleRelease
 
       - name: Run Kotlin Linter
-        run: ./gradlew ktlintStagingDebugCheck
+        run: ./gradlew ktlintCheck
 
       - name: Run Unit Tests
-        run: ./gradlew testStagingDebugUnitTest
+        run: ./gradlew testReleaseUnitTest
 
       - name: Sign package
         id: sign_app
