@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.time.Instant
 
 @Entity(tableName = "todo_item", indices = [Index(value = ["isDismissed", "isCompleted"])])
-data class ToDoItemEntity (
+data class ToDoItemEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String = "",
     val description: String? = null,
@@ -44,9 +44,10 @@ class ToDoItem(
             created = created.epochSecond,
         )
     }
+
     companion object {
         const val FIELD_NAME = "name"
-        const val  FIELD_DESCRIPTION = "description"
+        const val FIELD_DESCRIPTION = "description"
 
         fun fromEntity(entity: ToDoItemEntity): ToDoItem {
             return ToDoItem(

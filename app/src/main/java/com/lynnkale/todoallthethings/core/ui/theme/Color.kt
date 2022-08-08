@@ -1,4 +1,5 @@
 package com.lynnkale.todoallthethings.core.ui.theme
+
 import androidx.compose.ui.graphics.Color
 
 val md_theme_light_primary = Color(0xFF795900)
@@ -58,6 +59,5 @@ val md_theme_dark_inverseSurface = Color(0xFFE9E1D8)
 val md_theme_dark_inversePrimary = Color(0xFF795900)
 val md_theme_dark_shadow = Color(0xFF000000)
 val md_theme_dark_surfaceTint = Color(0xFFF3BF48)
-
 
 val seed = Color(0xFF7A5A00)

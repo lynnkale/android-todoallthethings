@@ -1,6 +1,10 @@
 package com.lynnkale.todoallthethings.todolist.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
 
 @Dao
@@ -25,5 +29,4 @@ interface ToDoItemDao {
 
     @Query("SELECT * FROM todo_item WHERE isDismissed = 0 AND isCompleted = 1 ORDER BY created ASC")
     suspend fun getComplete(): List<ToDoItemEntity>
-
 }
