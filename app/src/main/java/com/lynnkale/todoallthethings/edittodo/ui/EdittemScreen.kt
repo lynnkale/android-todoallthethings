@@ -1,6 +1,8 @@
 package com.lynnkale.todoallthethings.edittodo.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,7 +42,7 @@ fun EditItemScreen(
                     viewState.errors.values.forEach() { list ->
                         message += list.map { resourceId ->
                             stringResource(resourceId)
-                        }.joinToString ( separator = "\n" )
+                        }.joinToString(separator = "\n")
                     }
                     ErrorMessage(messageText = message)
                 }
@@ -84,7 +86,8 @@ fun NewItemModalLightPreview() {
             viewState = EditTodoItemState(item = ToDoItemEntity.mock()),
             onChangeName = {},
             onChangeDescription = {},
-            onSave = {})
+            onSave = {}
+        )
     }
 }
 
@@ -98,7 +101,8 @@ fun NewItemModalDarkPreview() {
             viewState = EditTodoItemState(item = ToDoItemEntity.mock(), isNew = true),
             onChangeName = {},
             onChangeDescription = {},
-            onSave = {})
+            onSave = {}
+        )
     }
 }
 
@@ -115,6 +119,7 @@ fun NewItemModalErrorPreview() {
             ),
             onChangeName = {},
             onChangeDescription = {},
-            onSave = {})
+            onSave = {}
+        )
     }
 }
