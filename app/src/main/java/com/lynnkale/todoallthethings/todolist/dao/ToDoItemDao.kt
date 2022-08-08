@@ -29,5 +29,4 @@ interface ToDoItemDao {
 
     @Query("SELECT * FROM todo_item WHERE isDismissed = 0 AND isCompleted = 1 ORDER BY created ASC")
     suspend fun getComplete(): List<ToDoItemEntity>
-
 }
