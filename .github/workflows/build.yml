@@ -15,10 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: set up JDK 1.8
+      - name: set up JDK 1.11
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 1.11
 
       - name: Increment the version code of your project
         uses: chkfung/android-version-actions@v1.1
