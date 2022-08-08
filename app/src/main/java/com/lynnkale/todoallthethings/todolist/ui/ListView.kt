@@ -118,8 +118,7 @@ private fun ToDoCard(
         onClick = { clickAction(item) },
         modifier = modifier.background(
             color = MaterialTheme.colorScheme.surface,
-
-            ),
+        ),
         border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary)
     ) {
         Row(
@@ -205,7 +204,8 @@ private fun ToDoCardDarkPreview() {
 private fun ToDoListPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = false) {
         ToDoList(
-            ToDoItemEntity.mockList(), {}, { _, _ -> }, {})
+            ToDoItemEntity.mockList(), {}, { _, _ -> }, {}
+        )
     }
 }
 
@@ -215,7 +215,9 @@ private fun ToDoListPreview() {
 @Composable
 fun ToDoListDarkPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = true) {
-        ToDoList(ToDoItemEntity.mockList(), {}, { _, _ -> }, {})
+        ToDoList(
+            ToDoItemEntity.mockList(), {}, { _, _ -> }, {}
+        )
     }
 }
 
@@ -227,7 +229,8 @@ fun ToDoListDarkPreview() {
 private fun ToDoEmptyListPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = false) {
         ToDoList(
-            emptyList(), {}, { _, _ -> }, {})
+            emptyList(), {}, { _, _ -> }, {}
+        )
     }
 }
 
@@ -238,6 +241,8 @@ private fun ToDoEmptyListPreview() {
 @Composable
 fun ToDoEmptyListDarkPreview() {
     ToDoAllTheThingsTheme(useDarkTheme = true) {
-        ToDoList(emptyList(), {}, { _, _ -> }, {})
+        ToDoList(
+            emptyList(), {}, { _, _ -> }, {}
+        )
     }
 }
