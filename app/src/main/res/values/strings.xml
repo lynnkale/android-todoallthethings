@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ToDoAllTheThings</string>
+    <string name="app_name">To Do ALL THE THINGS!</string>
     <string name="save">Save</string>
     <string name="description_label">Description</string>
     <string name="description_placeholder">Add more detail about this task</string>
