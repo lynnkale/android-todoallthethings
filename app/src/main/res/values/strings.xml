@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">To Do ALL THE THINGS!</string>
+    <string name="save">Save</string>
+    <string name="description_label">Description</string>
+    <string name="description_placeholder">Add more detail about this task</string>
+    <string name="name_label">Name</string>
+    <string name="name_placeholder">What do you want to do?</string>
+    <string name="name_value_required">A Name is required.</string>
+    <string name="create_new_item">Create New Todo</string>
+    <string name="edit_item">Edit Todo</string>
+</resources>
