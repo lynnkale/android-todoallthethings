@@ -86,7 +86,8 @@ fun NewItemModalLightPreview() {
             viewState = EditTodoItemState(item = ToDoItemEntity.mock()),
             onChangeName = {},
             onChangeDescription = {},
-            onSave = {})
+            onSave = {}
+        )
     }
 }
 
@@ -100,7 +101,8 @@ fun NewItemModalDarkPreview() {
             viewState = EditTodoItemState(item = ToDoItemEntity.mock(), isNew = true),
             onChangeName = {},
             onChangeDescription = {},
-            onSave = {})
+            onSave = {}
+        )
     }
 }
 
@@ -117,6 +119,7 @@ fun NewItemModalErrorPreview() {
             ),
             onChangeName = {},
             onChangeDescription = {},
-            onSave = {})
+            onSave = {}
+        )
     }
 }
