@@ -15,15 +15,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: set up JDK 1.11
+      - name: set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: 1.11
+          java-version: 11
 
       - name: Increment the version code of your project
         uses: chkfung/android-version-actions@v1.1
         with:
-          gradlePath: app/build.gradle
+          gradlePath: app/build.gradle.kts
           versionCode: ${{github.run_number}}
           versionName: 0.2
 
@@ -43,18 +43,34 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew testReleaseUnitTest
 
-      - name: Sign package
-        id: sign_app
-        uses: r0adkll/sign-android-release@v1.0.1
-        with:
-          releaseDirectory: app/build/outputs/apk/ourbuildtype/release
-          alias: ${{ secrets.KEYALIAS }}
-          signingKeyBase64: ${{ secrets.KEYSTORE }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+# Doesn't work from here on
+#      - name: Sign package
+#        id: sign_app
+#        uses: r0adkll/sign-android-release@v1.0.1
+#        with:
+#          releaseDirectory: app/build/outputs/apk/ourbuildtype/release
+#          alias: ${{ secrets.KEYALIAS }}
+#          signingKeyBase64: ${{ secrets.KEYSTORE }}
+#          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+#          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload our APK
-        uses: actions/upload-artifact@v2.2.0
+
+      - name: Create production flavor directory
+        run: mkdir -p app/src/production
+
+      - name: Setup production google-services.json
+        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/src/production/google-services.json
+
+      - name: Create service_account.json
+        run: echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}' > service_account.json
+
+      - name: Upload App
+        uses: r0adkll/upload-google-play@v1
         with:
-          name: Release artifact
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          serviceAccountJsonPlainText: service_account.json
+          packageName: com.lynnkale.todoallthethings
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          whatsNewDirectory: app/distribution/whatsnew
+          mappingFile: app/build/outputs/mapping/release/mapping.txt
+          inAppUpdatePriority: 1
