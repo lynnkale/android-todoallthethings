@@ -43,6 +43,13 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew testReleaseUnitTest
 
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'keystore/your_keystore.jks'
+          encodedString: $({{ secrets.KEYSTORE }}
+
 # Doesn't work from here on
 #      - name: Sign package
 #        id: sign_app

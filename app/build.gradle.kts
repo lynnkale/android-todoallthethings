@@ -32,7 +32,19 @@ android {
 
     signingConfigs {
         maybeCreate("release").apply {
-            storeFile = file("keystore/your_keystore.jks")
+            val tmpFilePath = System.getProperty("user.home") + "\\keystores\\"
+            println(tmpFilePath)
+            val keystorePath = "keystore/your_keystore.jks"
+            val allFilesFromDir = File(tmpFilePath).listFiles()
+
+            if (allFilesFromDir != null && !file(keystorePath).isFile) {
+                val keystoreFile = allFilesFromDir.first()
+                println(keystoreFile)
+                keystoreFile.copyTo(file(keystorePath))
+            }
+
+            storeFile = file(keystorePath)
+
             storePassword = "A"
             keyAlias = "B"
             keyPassword = "C"
