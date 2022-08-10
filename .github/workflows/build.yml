@@ -27,29 +27,29 @@ jobs:
           versionCode: ${{github.run_number}}
           versionName: 0.2
 
-      - name: Decode Keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: 'your_keystore.jks'
-          fileDir: '.app/keystore'
-          encodedString: $({{ secrets.KEYSTORE }}
-
-      - name: Build all artifacts
-        id: build_all_apks
-        uses: eskatos/gradle-command-action@v1.3.3
-        with:
-          gradle-version: current
-          wrapper-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
-          arguments: assembleRelease
+#      - name: Build all artifacts
+#        id: build_all_apks
+#        uses: eskatos/gradle-command-action@v1.3.3
+#        with:
+#          gradle-version: current
+#          wrapper-cache-enabled: true
+#          dependencies-cache-enabled: true
+#          configuration-cache-enabled: true
+#          arguments: assembleRelease
 
       - name: Run Kotlin Linter
         run: ./gradlew ktlintCheck
 
+      - name: Build with Gradle
+        id: build
+        run: ./gradlew build
+
       - name: Run Unit Tests
         run: ./gradlew testReleaseUnitTest
+
+      - name: Build Release AAB
+        id: buildRelease
+        run: ./gradlew bundleRelease
 
 # Doesn't work from here on
 #      - name: Sign package
@@ -63,14 +63,22 @@ jobs:
 #          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
 
-      - name: Create production flavor directory
-        run: mkdir -p app/src/production
-
-      - name: Setup production google-services.json
-        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/src/production/google-services.json
+#      - name: Create production flavor directory
+#        run: mkdir -p app/src/production
+#
+#      - name: Setup production google-services.json
+#        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/src/production/google-services.json
 
       - name: Create service_account.json
         run: echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}' > service_account.json
+
+#      - name: Decode Keystore
+#        id: decode_keystore
+#        uses: timheuer/base64-to-file@v1
+#        with:
+#          fileName: 'your_keystore.jks'
+#          fileDir: '.app/keystore'
+#          encodedString: $({{ secrets.KEYSTORE }}
 
       - name: Upload App
         uses: r0adkll/upload-google-play@v1
