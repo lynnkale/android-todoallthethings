@@ -30,25 +30,6 @@ android {
         }
     }
 
-    signingConfigs {
-        maybeCreate("release").apply {
-            val tmpFilePath = System.getProperty("user.home") + "\\keystores\\"
-            val keystorePath = "keystore/your_keystore.jks"
-            val allFilesFromDir = File(tmpFilePath).listFiles()
-
-            if (allFilesFromDir != null && !file(keystorePath).isFile) {
-                val keystoreFile = allFilesFromDir.first()
-                keystoreFile.copyTo(file(keystorePath))
-            }
-
-            storeFile = file(keystorePath)
-
-            storePassword = "A"
-            keyAlias = "B"
-            keyPassword = "C"
-        }
-    }
-
     buildTypes {
         debug {
             isMinifyEnabled = false
@@ -59,7 +40,6 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            // signingConfig = signingConfigs.getByName("release")
         }
     }
 

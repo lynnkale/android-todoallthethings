@@ -51,35 +51,19 @@ jobs:
         id: buildRelease
         run: ./gradlew bundleRelease
 
-# Doesn't work from here on
-#      - name: Sign package
-#        id: sign_app
-#        uses: r0adkll/sign-android-release@v1.0.1
-#        with:
-#          releaseDirectory: app/build/outputs/apk/ourbuildtype/release
-#          alias: ${{ secrets.KEYALIAS }}
-#          signingKeyBase64: ${{ secrets.KEYSTORE }}
-#          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-#          keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-
-#      - name: Create production flavor directory
-#        run: mkdir -p app/src/production
-#
-#      - name: Setup production google-services.json
-#        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/src/production/google-services.json
+      - name: Sign AAB
+        id: sign
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.KEYSTORE }}
+          alias: ${{ secrets.KEY_STORE_ALIAS }}
+          keyStorePassword: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
 
       - name: Create service_account.json
         id: serviceAccount
         run: echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}' > service_account.json
-
-#      - name: Decode Keystore
-#        id: decode_keystore
-#        uses: timheuer/base64-to-file@v1
-#        with:
-#          fileName: 'your_keystore.jks'
-#          fileDir: '.app/keystore'
-#          encodedString: $({{ secrets.KEYSTORE }}
 
       - name: Upload App
         uses: r0adkll/upload-google-play@v1
