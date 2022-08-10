@@ -32,7 +32,7 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           fileName: 'your_keystore.jks'
-          fileDir: './keystore'
+          fileDir: '.app/keystore'
           encodedString: $({{ secrets.KEYSTORE }}
 
       - name: Build all artifacts
