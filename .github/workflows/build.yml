@@ -84,7 +84,7 @@ jobs:
       - name: Upload App
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPlainText:  service_account.json
+          serviceAccountJson: service_account.json
           packageName: com.lynnkale.todoallthethings
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: internal
