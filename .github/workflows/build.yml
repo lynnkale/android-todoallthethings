@@ -31,7 +31,8 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'keystore/your_keystore.jks'
+          fileName: 'your_keystore.jks'
+          fileDir: './keystore'
           encodedString: $({{ secrets.KEYSTORE }}
 
       - name: Build all artifacts
