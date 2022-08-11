@@ -20,28 +20,33 @@ jobs:
         with:
           java-version: 11
 
-      - name: Build all artifacts
-        id: build_all_apks
-        uses: eskatos/gradle-command-action@v1.3.3
+      - name: Increment the version code of your project
+        uses: chkfung/android-version-actions@v1.1
         with:
-          gradle-version: current
-          wrapper-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
-          arguments: assembleRelease
+          gradlePath: app/build.gradle.kts
+          versionCode: ${{github.run_number}}
+          versionName: 0.2
 
       - name: Run Kotlin Linter
         run: ./gradlew ktlintCheck
 
+      - name: Build with Gradle
+        id: build
+        run: ./gradlew build
+
       - name: Run Unit Tests
         run: ./gradlew testReleaseUnitTest
 
-      - name: Sign package
-        id: sign_app
-        uses: r0adkll/sign-android-release@v1.0.1
+      - name: Build Release AAB
+        id: buildRelease
+        run: ./gradlew bundleRelease
+
+      - name: Sign AAB
+        id: sign
+        uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: app/build/outputs/apk/ourbuildtype/release
-          alias: ${{ secrets.KEYALIAS }}
+          releaseDirectory: app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.KEYSTORE }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          alias: ${{ secrets.SIGNING_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
