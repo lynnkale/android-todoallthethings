@@ -27,16 +27,6 @@ jobs:
           versionCode: ${{github.run_number}}
           versionName: 0.2
 
-#      - name: Build all artifacts
-#        id: build_all_apks
-#        uses: eskatos/gradle-command-action@v1.3.3
-#        with:
-#          gradle-version: current
-#          wrapper-cache-enabled: true
-#          dependencies-cache-enabled: true
-#          configuration-cache-enabled: true
-#          arguments: assembleRelease
-
       - name: Run Kotlin Linter
         run: ./gradlew ktlintCheck
 
@@ -75,3 +65,4 @@ jobs:
           whatsNewDirectory: app/distribution/whatsnew
           mappingFile: app/build/outputs/mapping/release/mapping.txt
           inAppUpdatePriority: 1
+          status: draft
