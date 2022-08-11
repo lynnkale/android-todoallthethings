@@ -11,7 +11,6 @@ import com.lynnkale.todoallthethings.todolist.model.ToDoItemEntity
     entities = [ToDoItemEntity::class],
     version = 1
 )
-
 abstract class ToDoDatabase : RoomDatabase() {
     abstract val todoItemDao: ToDoItemDao
 }

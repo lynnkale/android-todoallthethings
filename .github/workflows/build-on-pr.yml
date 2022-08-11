@@ -1,9 +1,10 @@
-name: Build
+name: Build for PR
 
 on:
-  push:
-    branches:
-      - 'trunk'
+  pull_request:
+    types:
+      - opened
+      - reopened
 
 jobs:
   build:
@@ -49,19 +50,3 @@ jobs:
           alias: ${{ secrets.SIGNING_KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Create service_account.json
-        id: serviceAccount
-        run: echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}' > service_account.json
-
-      - name: Upload App
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJson: service_account.json
-          packageName: com.lynnkale.todoallthethings
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: internal
-          whatsNewDirectory: app/distribution/whatsnew
-          mappingFile: app/build/outputs/mapping/release/mapping.txt
-          inAppUpdatePriority: 1
-          status: draft
